@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сайт в разработке</title>
+    <title>Александр Косплей - Фотография косплея</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -11,93 +12,500 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #614e8c;
+            --text-color: #e0e0e0;
+            --highlight-color: #a577ff;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a535c 0%, #2e8b57 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
         
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--highlight-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--highlight-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/1920x1080/?cosplay,photography') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
             text-align: center;
-            padding: 2rem;
+            color: white;
+            margin-top: 60px;
+        }
+        
+        .hero-content {
             max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
         }
         
-        h1 {
-            font-size: 3.5rem;
+        .hero h1 {
+            font-size: 4rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-            color: #e0f7fa;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
         }
         
-        .subtitle {
+        .hero p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
             opacity: 0.9;
-            color: #e0f7fa;
         }
         
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #e0f7fa;
-            animation: spin 1s ease-in-out infinite;
-            margin: 2rem auto;
-        }
-        
-        .progress {
-            width: 80%;
-            height: 8px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            margin: 2rem auto;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            width: 40%;
-            background: linear-gradient(90deg, #4caf50, #2e7d32);
-            border-radius: 4px;
-            animation: progress 3s ease-in-out infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes progress {
-            0%, 100% { width: 40%; }
-            50% { width: 70%; }
-        }
-        
-        .note {
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
             font-size: 1.1rem;
-            margin-top: 2rem;
-            opacity: 0.8;
-            color: #e0f7fa;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(165, 119, 255, 0.3);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--highlight-color);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-overlay h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--highlight-color);
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--highlight-color);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item i {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--highlight-color);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                flex-direction: column;
+                background-color: var(--secondary-color);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                margin-bottom: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Сайт в разработке</h1>
-        <p class="subtitle">Мы создаём что-то удивительное!</p>
-        <div class="spinner"></div>
-        <div class="progress">
-            <div class="progress-bar"></div>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Александр Косплей</a>
+                <ul class="nav-links">
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#gallery">Галерея</a></li>
+                    <li><a href="#about">Обо мне</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
         </div>
-        <p class="note">Этот проект находится в активной разработке. Загляните позже — будет ещё лучше!</p>
-    </div>
+    </header>
+    
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Фотография косплея</h1>
+                <p>Создаю визуальные истории, где вымышленные миры становятся реальностью</p>
+                <a href="#gallery" class="btn">Посмотреть галерею</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Галерея работ</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/800x600/?cosplay,anime,princess" alt="Косплей принцессы">
+                    <div class="gallery-overlay">
+                        <h3>Принцесса Сияния</h3>
+                        <p>Косплей аниме "Сияющая принцесса"</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/800x600/?cosplay,superhero,woman" alt="Косплей супергероини">
+                    <div class="gallery-overlay">
+                        <h3>Супергероиня Тьмы</h3>
+                        <p>Косплей персонажа из комиксов</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/800x600/?cosplay,game,character" alt="Косплей персонажа игры">
+                    <div class="gallery-overlay">
+                        <h3>Косплей из "Героев Мира"</h3>
+                        <p>Персонаж из популярной видеоигры</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/800x600/?cosplay,steampunk,woman" alt="Косплей стимпанк">
+                    <div class="gallery-overlay">
+                        <h3>Стимпанк Механик</h3>
+                        <p>Элегантный стимпанк образ</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/800x600/?cosplay,manga,character" alt="Косплей манги">
+                    <div class="gallery-overlay">
+                        <h3>Косплей из "Небесного Падения"</h3>
+                        <p>Манга-персонаж с драматичным образом</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://source.unsplash.com/random/800x600/?cosplay,scifi,alien" alt="Косплей научной фантастики">
+                    <div class="gallery-overlay">
+                        <h3>Инопланетный Посланник</h3>
+                        <p>Научно-фантастический образ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://source.unsplash.com/random/800x600/?photographer,man,portrait" alt="Фотограф Александр Косплей">
+                </div>
+                <div class="about-text">
+                    <h2>Обо мне</h2>
+                    <p>Привет! Меня зовут Александр, и я профессиональный фотограф косплея с более чем 8-летним опытом. Моя страсть - превращать вымышленные персонажи в живые, драматичные образы, которые запечатлевают дух и эмоции каждого персонажа.</p>
+                    <p>Я специализируюсь на создании атмосферных снимков, которые передают не только внешнее сходство, но и внутреннюю суть персонажей. Моя философия - работать в тесном сотрудничестве с косплеерами, чтобы создать настоящие произведения искусства, а не просто фотографии.</p>
+                    <p>Моя работа была опубликована в ведущих журналах по косплею и демонстрировалась на международных выставках. Я верю, что каждый косплей - это история, и моя задача - рассказать эту историю через объектив.</p>
+                    <a href="#contact" class="btn">Связаться со мной</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Связаться со мной</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Контактная информация</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>alexander.cosplay@example.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+7 (999) 123-45-67</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Москва, Россия</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Запись на съемку по предварительной договоренности</span>
+                    </div>
+                    
+                    <h3 style="margin-top: 2rem;">Социальные сети</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form action="#" method="post">
+                        <input type="text" name="name" placeholder="Ваше имя" required>
+                        <input type="email" name="email" placeholder="Ваш email" required>
+                        <input type="text" name="subject" placeholder="Тема сообщения" required>
+                        <textarea name="message" placeholder="Ваше сообщение" required></textarea>
+                        <button type="submit" class="btn">Отправить сообщение</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Александр Косплей. Все права защищены.</p>
+            <p>Фотография косплея | Москва, Россия</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

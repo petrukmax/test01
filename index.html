@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Uptime Monitor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .status-online {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .status-offline {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Website Uptime Monitor</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Сайт</th>
+                    <th>Статус</th>
+                    <th>Время ответа (мс)</th>
+                    <th>Время проверки</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>https://ya.ru</td>
+                    <td class="status-online">Online</td>
+                    <td>341.47</td>
+                    <td>2026-03-16 18:32:26</td>
+                </tr>
+                <tr>
+                    <td>https://vk.com</td>
+                    <td class="status-online">Online</td>
+                    <td>1334.6</td>
+                    <td>2026-03-16 18:32:27</td>
+                </tr>
+                <tr>
+                    <td>https://cloud.ru</td>
+                    <td class="status-offline">Offline</td>
+                    <td>129.41</td>
+                    <td>2026-03-16 18:32:28</td>
+                </tr>
+                <tr>
+                    <td>https://habr.com</td>
+                    <td class="status-online">Online</td>
+                    <td>249.66</td>
+                    <td>2026-03-16 18:32:28</td>
+                </tr>
+                <tr>
+                    <td>https://ozon.ru</td>
+                    <td class="status-offline">Offline</td>
+                    <td>297.84</td>
+                    <td>2026-03-16 18:32:28</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="footer">
+            <p>Последнее обновление: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
+        </div>
+    </div>
+</body>
+</html>

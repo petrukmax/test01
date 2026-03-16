@@ -293,6 +293,90 @@
         }
         
         /* Responsive Design */
+
+  /* Gallery Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
+  .modal-content {
+    position: relative;
+    margin: 5% auto;
+    width: 80%;
+    max-width: 800px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-images {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modal-images img {
+    max-height: 90%;
+    max-width: 90%;
+    object-fit: contain;
+  }
+
+  .prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+  }
+
+  .prev-btn {
+    left: 20px;
+  }
+
+  .next-btn {
+    right: 20px;
+  }
+
+  .prev-btn:hover, .next-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .close-modal:hover {
+    color: #bbb;
+  }
+
+  
         @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
@@ -442,6 +526,18 @@
             </div>
         </div>
     </section>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="modal">
+      <span class="close-modal">&times;</span>
+      <div class="modal-content">
+        <button class="prev-btn">&lt;</button>
+        <div class="modal-images">
+          <!-- Images will be populated by JavaScript -->
+        </div>
+        <button class="next-btn">&gt;</button>
+      </div>
+    </div>
     
     <section id="about" class="about">
         <div class="container">
@@ -534,6 +630,183 @@
                 }
             });
         });
+
+
+// Gallery Modal Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all gallery items
+  const galleryItems = document.querySelectorAll('.gallery-item img');
+  const modal = document.getElementById('galleryModal');
+  const modalImages = document.querySelector('.modal-images');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  const closeBtn = document.querySelector('.close-modal');
+  
+  // Array to store image sources and alt texts
+  const images = [];
+  galleryItems.forEach(item => {
+    images.push({
+      src: item.src,
+      alt: item.alt
+    });
+  });
+  
+  // Current image index
+  let currentIndex = 0;
+  
+  // Function to display current image in modal
+  function displayImage(index) {
+    // Clear previous content
+    modalImages.innerHTML = '';
+    
+    // Create new image element
+    const img = document.createElement('img');
+    img.src = images[index].src;
+    img.alt = images[index].alt;
+    
+    // Add event listeners for swipe gestures
+    img.addEventListener('touchstart', handleTouchStart);
+    img.addEventListener('touchmove', handleTouchMove);
+    img.addEventListener('mousedown', handleMouseDown);
+    img.addEventListener('mousemove', handleMouseMove);
+    img.addEventListener('mouseup', handleMouseUp);
+    img.addEventListener('mouseout', handleMouseOut);
+    
+    // Add image to modal
+    modalImages.appendChild(img);
+    
+    // Update button states
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === images.length - 1;
+  }
+  
+  // Touch event variables
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  // Handle touch start
+  function handleTouchStart(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }
+  
+  // Handle touch move
+  function handleTouchMove(e) {
+    touchEndX = e.changedTouches[0].screenX;
+  }
+  
+  // Mouse event variables
+  let mouseStartX = 0;
+  let mouseEndX = 0;
+  let isDragging = false;
+  
+  // Handle mouse down
+  function handleMouseDown(e) {
+    mouseStartX = e.clientX;
+    isDragging = true;
+  }
+  
+  // Handle mouse move
+  function handleMouseMove(e) {
+    if (isDragging) {
+      mouseEndX = e.clientX;
+    }
+  }
+  
+  // Handle mouse up
+  function handleMouseUp(e) {
+    if (isDragging) {
+      mouseEndX = e.clientX;
+      handleSwipe();
+      isDragging = false;
+    }
+  }
+  
+  // Handle mouse out
+  function handleMouseOut(e) {
+    if (isDragging) {
+      mouseEndX = e.clientX;
+      handleSwipe();
+      isDragging = false;
+    }
+  }
+  
+  // Handle swipe
+  function handleSwipe() {
+    const threshold = 50; // Minimum distance for swipe
+    
+    // Calculate swipe distance
+    const swipeDistance = touchStartX - touchEndX;
+    
+    // Check if swipe is horizontal
+    if (Math.abs(swipeDistance) > threshold) {
+      if (swipeDistance > 0) {
+        // Swipe left - next image
+        showNextImage();
+      } else {
+        // Swipe right - previous image
+        showPrevImage();
+      }
+    }
+    
+    // Reset touch positions
+    touchStartX = 0;
+    touchEndX = 0;
+  }
+  
+  // Show next image
+  function showNextImage() {
+    if (currentIndex < images.length - 1) {
+      currentIndex++;
+      displayImage(currentIndex);
+    }
+  }
+  
+  // Show previous image
+  function showPrevImage() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      displayImage(currentIndex);
+    }
+  }
+  
+  // Event listeners for navigation buttons
+  prevBtn.addEventListener('click', showPrevImage);
+  nextBtn.addEventListener('click', showNextImage);
+  
+  // Close modal when clicking on close button
+  closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+  
+  // Close modal when clicking outside the modal content
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+  
+  // Add click event to all gallery items
+  galleryItems.forEach((item, index) => {
+    item.addEventListener('click', function() {
+      currentIndex = index;
+      displayImage(currentIndex);
+      modal.style.display = 'block';
+    });
+  });
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (modal.style.display === 'block') {
+      if (e.key === 'ArrowLeft') {
+        showPrevImage();
+      } else if (e.key === 'ArrowRight') {
+        showNextImage();
+      } else if (e.key === 'Escape') {
+        modal.style.display = 'none';
+      }
+    }
+  });
+});
     </script>
 </body>
 </html>
